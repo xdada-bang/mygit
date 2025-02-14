@@ -19,6 +19,11 @@ Hardware와 연결된 웹캠을 통해 영상을 입력받고, 감시된 객체�
 그중 사용자가 지정한 특정 구간(y_label)을 통과하는 객체를 감지합니다.
 객체를 탐지시 팬스에 연결된 차단기 및 스피커에 신호가 전달되어 출력합니다.
 
+🔹 프로젝트 구조
+  - main.py : 프로젝트 메인 코드
+  - config : YOLOv4.cfg 파일 및 coco.names
+  - README.md : 프로젝트 설명 파일
+
 
 ## 개발환경 및 기술스택
 - Programming : Python, Opnecv
