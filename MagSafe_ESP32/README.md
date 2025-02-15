@@ -1,62 +1,50 @@
 ## 프로젝트 소개
-우분투 20.04 버전 Jetson Xavier 환경에서 Yolov4와 OpenCV를 사용하여 특정 객체(자동차, 사람)를 실시간 탐지하는 프로젝트입니다.
+휴대용 혈당계의 복잡한 매뉴얼, 나쁜 휴대성을 해결하기 위해 핸드폰 뒤에 붙이는 형식의 Maqsafe( iPhone 충전기, 자석을 이용해 뒤에 붙히기만 하면된다.) 혈당계를 생각했습니다.
+자주 채혈을 한다는 불편함을 해결하기위해 AI 인식을 이용한 식단관리, 먹은 음식에 대한 데이터를 도출 한뒤 올라갈 혈당을 예상할수있습니다. 
+이것을 사용함으로써 사용자는 자신의 혈당을 항상 알기위해 채혈을 하는것을 방지해 불편함을 해소시킬수 있습니다.
 
 ## 개발기간
-2023.06 ~ 2023.09
+2024.11 ~ 2024.11
 
 ## 개발인원
-- 팀장 양윤모 HW/SW 총괄 
-- 팀원 정필준 하드웨어 구현 
-- 팀원 방제우(본인) AI 인식 및 마이크로프로세서 기반 프로그래밍 개발 (이 저장소에 포함된 코드)
-- 팀원 맹규호 마이크로프로세서 기반 프로그래밍 구현
-- 팀원 김윤진 하드웨어 중점 케드 설계 및 기술조사
-- 팀원 원승우 AI 인식 및 마이크로프로세서 기반 프로그래밍 개발
+- 팀장 맹규호 HW/SW 총괄 및 AI 인식 담당 
+- 팀원 김진수 하드웨어 구현
+- 팀원 방제우(본인) Bluetooth 통신 구현, 코드 디버깅
+- 팀원 이종화 하드웨어 구현
   
 ## 프로젝트 개요
-이 프로젝트는 Yolov4와 Opencv, CUDA 가속을 활용하여 실시간 인식을 구현합니다.
-Hardware와 연결된 웹캠을 통해 영상을 입력받고, 감시된 객체를 화면에 표시합니다. 
+맥세이프 기반 혈당계를 활용해 스마트폰과의 근거리 무선통신 기능을 구현하여 휴대성과 터치 인터페이스를 만들어 편의성 향상. 
+음식 데이터 셋을 추출 하여 AI 화면 인식을 통해 혈당 예측합니다. 
+그후 하루에 먹은 음식에 대한 예상 혈당치 출력하는 프로젝트입니다.
 
-그중 사용자가 지정한 특정 구간(y_label)을 통과하는 객체를 감지합니다.
-객체를 탐지시 팬스에 연결된 차단기 및 스피커에 신호가 전달되어 출력합니다.
-
+본문에는 ESP32 BLE 통신 기능만 포함하고 있습니다.
 
 ## 개발환경 및 기술스택
-- Programming : Python, Opnecv
-- Framework : Yolov4
-- Hardware : Jetson Xaiver
-- OS : Ubuntu 20.04
+- Programming Language : C++
+- Framework : Arduino(ESP32 Development)
+- Hardware : ESP32(TTGO LoRa32 V1) ,SmartPhone(Android/iOS)
+- IDE & Tools: PlatformIO(VSCode)
+- 통신 기술 : ESP32 BLE(Blutooth Low Energy), 근거리 무선 통신 (BLE)으로 데이터 송수신
 
 ## 프로젝트 실행 방법
 
-1️⃣ Yolo 가중치 파일 다운로드
+1️⃣ ESP32 보드를 PC 또는 노트북과 연결
+2️⃣ VSCode 에서 PlatformIO로 프로젝트 열기 
+-VSCode 에서 PlatformIO Upload 또는 터미널에서 실행
+3️⃣ 코드 빌드 및 실행
 
-!wget https://github.com/AlexeyAB/darknet/releases/download/darknet_yolo_v3_optimal/yolov4.weights
-
-2️⃣ 필요한 패키지 설치
-
-pip install -r requirements.txt
-
-3️⃣ 실행
-
-python main.py
-
-📌 ESC 키를 누르면 종료합니다.
    
 ## 주요 기능
-✅ YOLOv4를 활용한 객체 탐지
+✅ ESP32를 BLE 서버로 설정
 
+✅ 스마트폰과 BLE 데이터 송수신
+- 스마트폰에서 데이터 요청하면 응답 패킷 전송
 
-✅ OpenCV를 이용한 실시간 영상 처리
+✅ BLE 연결 상태 모니터링
+- BLE 클라이언트가 연결되었을 때 상태 메시지 출력
 
+## 추가시키고 싶은 점 
+🔹 NFC 통신 구현
 
-✅ 특정 구간을 통과하는 특정 객체 감지 기능
+🔹 STM32 기반으로 개발
 
-
-✅ CUDA 지원 기능
-
-## 개선할 점 
-🔹 CUDA 사용 오류 개선
-
-🔹 해상도를 늘리면서 FPS를 늘리는 방법 추가
-
-🔹Jetson Xavier외 라즈베리 파이에 적용할 수 있는 코드 구상 
